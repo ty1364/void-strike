@@ -26,6 +26,12 @@
   gate.innerHTML = '<div style="font-size:28px;font-weight:900;letter-spacing:.08em;text-shadow:0 0 18px #55f7ff">CLICK TO LOCK AIM</div><div style="margin-top:8px;font-size:13px;color:#c8d3ff">Mouse stays inside the game. ESC releases it.</div>';
   wrap.appendChild(gate);
 
+  function clampAim() {
+    const r = gameCanvas.getBoundingClientRect();
+    mouse.x = Math.max(4, Math.min(r.width - 4, mouse.x));
+    mouse.y = Math.max(4, Math.min(r.height - 4, mouse.y));
+  }
+
   function placeReticle() {
     const r = gameCanvas.getBoundingClientRect();
     if (!r.width || !r.height) return;
@@ -37,25 +43,17 @@
     if (document.pointerLockElement === gameCanvas) return;
     try {
       const result = gameCanvas.requestPointerLock();
-      if (result && typeof result.catch === 'function') {
-        result.catch(() => { gate.style.display = 'flex'; });
-      }
+      if (result && typeof result.catch === 'function') result.catch(() => { gate.style.display = 'flex'; });
     } catch (_) {
       gate.style.display = 'flex';
     }
   }
 
-  function showGateSoon() {
+  start.addEventListener('click', () => {
     setTimeout(() => {
-      if (typeof running !== 'undefined' && running && document.pointerLockElement !== gameCanvas) {
-        gate.style.display = 'flex';
-      }
+      if (typeof running !== 'undefined' && running && document.pointerLockElement !== gameCanvas) gate.style.display = 'flex';
     }, 80);
-  }
-
-  // Start the game first, then require a direct click inside the arena.
-  // This is more reliable than trying to lock from the start button itself.
-  start.addEventListener('click', showGateSoon);
+  });
 
   gate.addEventListener('click', (e) => {
     e.preventDefault();
@@ -63,7 +61,6 @@
     requestLockDirect();
   });
 
-  // If the player presses ESC or the browser releases lock, the next click in the arena relocks it.
   gameCanvas.addEventListener('click', () => {
     if (typeof running !== 'undefined' && running && document.pointerLockElement !== gameCanvas) requestLockDirect();
   });
@@ -85,11 +82,16 @@
     gate.style.display = 'flex';
   });
 
-  document.addEventListener('mousemove', (e) => {
+  // IMPORTANT: when pointer lock is active, this capture-phase handler owns aim.
+  // It runs before the original game.js canvas mousemove handler and blocks that
+  // old absolute-coordinate listener from overwriting our relative movement.
+  window.addEventListener('mousemove', (e) => {
     if (document.pointerLockElement !== gameCanvas) return;
-    const r = gameCanvas.getBoundingClientRect();
-    mouse.x = Math.max(4, Math.min(r.width - 4, mouse.x + e.movementX));
-    mouse.y = Math.max(4, Math.min(r.height - 4, mouse.y + e.movementY));
+    mouse.x += e.movementX;
+    mouse.y += e.movementY;
+    clampAim();
     placeReticle();
-  });
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  }, true);
 })();
