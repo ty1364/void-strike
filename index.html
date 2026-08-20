@@ -17,6 +17,7 @@
           <div class="brand">VOID <span>STRIKE</span></div>
           <div class="stat"><small>SCORE</small><strong id="score">0</strong></div>
           <div class="stat"><small>WAVE</small><strong id="wave">1</strong></div>
+          <div class="stat"><small>LIVES</small><strong id="lives">3</strong></div>
         </div>
         <div class="hud-right">
           <div class="combo" id="combo">1X</div>
@@ -24,13 +25,14 @@
             <div class="nova-label">SPACE — NOVA</div>
             <div class="nova-track"><div class="nova-fill" id="novaFill"></div></div>
           </div>
+          <div class="stat"><small>RAPID FIRE</small><strong id="rapidStatus">OFF</strong></div>
         </div>
       </div>
 
       <div class="start-screen" id="startScreen">
-        <div class="eyebrow">NEON SURVIVAL // PROTOTYPE 01</div>
+        <div class="eyebrow">NEON SURVIVAL // PROTOTYPE 02</div>
         <h1>VOID STRIKE</h1>
-        <p>Move the mouse to aim. Click to fire. Hit <kbd>SPACE</kbd> to detonate a Nova Blast.</p>
+        <p>Move the mouse to aim. Click to fire. Hold click during Rapid Fire. Hit <kbd>SPACE</kbd> to detonate a Nova Blast.</p>
         <button id="startBtn">ENTER THE VOID</button>
       </div>
 
@@ -44,7 +46,7 @@
       <div class="boss-warning hidden" id="bossWarning">⚠ BOSS SIGNAL DETECTED ⚠</div>
     </section>
 
-    <p class="controls">MOUSE = AIM · CLICK = FIRE · SPACE = NOVA</p>
+    <p class="controls">MOUSE = AIM · CLICK = FIRE · HOLD CLICK WITH RAPID FIRE · SPACE = NOVA</p>
   </main>
 
   <script src="game.js"></script>
