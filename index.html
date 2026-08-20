@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>VOID STRIKE</title>
+  <meta name="description" content="VOID STRIKE — a neon browser arcade shooter." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <section class="game-wrap" aria-label="VOID STRIKE game">
+      <canvas id="game" width="1280" height="720" tabindex="0"></canvas>
+
+      <div class="hud" aria-hidden="true">
+        <div class="hud-left">
+          <div class="brand">VOID <span>STRIKE</span></div>
+          <div class="stat"><small>SCORE</small><strong id="score">0</strong></div>
+          <div class="stat"><small>WAVE</small><strong id="wave">1</strong></div>
+        </div>
+        <div class="hud-right">
+          <div class="combo" id="combo">1X</div>
+          <div class="nova-wrap">
+            <div class="nova-label">SPACE — NOVA</div>
+            <div class="nova-track"><div class="nova-fill" id="novaFill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="start-screen" id="startScreen">
+        <div class="eyebrow">NEON SURVIVAL // PROTOTYPE 01</div>
+        <h1>VOID STRIKE</h1>
+        <p>Move the mouse to aim. Click to fire. Hit <kbd>SPACE</kbd> to detonate a Nova Blast.</p>
+        <button id="startBtn">ENTER THE VOID</button>
+      </div>
+
+      <div class="game-over hidden" id="gameOver">
+        <div class="eyebrow">SIGNAL LOST</div>
+        <h2>YOU GOT ERASED.</h2>
+        <div class="final-score"><small>FINAL SCORE</small><strong id="finalScore">0</strong></div>
+        <button id="restartBtn">RUN IT BACK</button>
+      </div>
+
+      <div class="boss-warning hidden" id="bossWarning">⚠ BOSS SIGNAL DETECTED ⚠</div>
+    </section>
+
+    <p class="controls">MOUSE = AIM · CLICK = FIRE · SPACE = NOVA</p>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
